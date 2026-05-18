@@ -163,6 +163,14 @@ canvas{max-height:220px}
 .breakdown-pct{font-size:11px;color:var(--tx3);margin-left:5px}
 
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
+
+/* COMMISSION TIERS */
+.comissao-box{background:#f8fafc;border:1.5px dashed rgba(13,42,94,.18);border-radius:var(--rs);padding:14px;margin-bottom:12px}
+.comissao-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.comissao-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--tx2)}
+.comissao-item{display:grid;grid-template-columns:.85fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px}
+.comissao-item .fg{margin-bottom:0}
+@media(max-width:720px){.comissao-item{grid-template-columns:1fr 1fr}.comissao-item .remove-row{height:34px}}
 </style>
 </head>
 <body>
@@ -302,6 +310,18 @@ canvas{max-height:220px}
       </div>
       <div class="fg" style="margin-bottom:14px"><label>Quantidade Vendida (unidades)</label><input type="number" id="inp-prod-qtd" min="0" step="1" value="0" oninput="calcProdModal()"></div>
 
+      <!-- COMISSÃO EXTERNA (sempre disponível) -->
+      <div class="comissao-box">
+        <div class="comissao-head">
+          <div>
+            <div class="comissao-title">🤝 Comissão Externa</div>
+            <div class="hint">Escolha valor fixo por unidade ou percentual sobre o faturamento, com faixas por quantidade vendida.</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="addComissaoRow('externa')">+ Faixa</button>
+        </div>
+        <div id="lista-comissao-externa"></div>
+      </div>
+
       <!-- ═ PAINEL PRODUZIDO ═ -->
       <div id="painel-produzido">
         <div class="sep" style="margin-top:0"></div>
@@ -333,10 +353,20 @@ canvas{max-height:220px}
               <input type="text" id="pm-mo-interna-preview" class="computed" readonly>
             </div>
             <div class="fg" style="margin-bottom:0">
-              <label>Comissão do Prestador Interno (R$)</label>
-              <input type="number" id="inp-comissao-interna" min="0" step="0.01" value="0" oninput="calcProdModal()" placeholder="0,00">
-              <div class="hint">Valor fixo somado ao custo interno</div>
+              <label>Comissão Interna Aplicada</label>
+              <input type="text" id="pm-comissao-interna-preview" class="computed" readonly>
+              <div class="hint">Conforme a faixa atingida pela quantidade vendida</div>
             </div>
+          </div>
+          <div class="comissao-box" style="margin-top:12px;margin-bottom:0">
+            <div class="comissao-head">
+              <div>
+                <div class="comissao-title">Faixas de Comissão Interna</div>
+                <div class="hint">Fixa por unidade ou % sobre o preço de venda.</div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="addComissaoRow('interna')">+ Faixa</button>
+            </div>
+            <div id="lista-comissao-interna"></div>
           </div>
         </div>
 
@@ -422,6 +452,8 @@ const S = {
       id: 1, nome: 'Produto 1', tipo: 'produzido',
       tempo: 30, moTipo: 'ambas',
       comissaoInterna: 0,
+      comissaoInternaFaixas: [{ min: 0, tipo: 'fixa', valor: 0 }],
+      comissaoExternaFaixas: [{ min: 0, tipo: 'percentual', valor: 0 }],
       precoVenda: 270, qtdVendida: 10, precoCompra: 0,
       maoObraExterna: [{ desc: 'Empresa Terceirizada', valor: 5 }],
       matPrima: [{ desc: 'Tecido', valor: 4, qtd: 20 }],
@@ -474,19 +506,48 @@ function getCustoMin() {
 // CALC PRODUTO
 // MO tipo: 'interna' = só custo/min | 'externa' = só lista externa | 'ambas' = soma
 // ══════════════════════════════════════════
+function getFaixaComissao(faixas, qtd) {
+  const lista = (faixas && faixas.length ? faixas : [{ min: 0, tipo: 'fixa', valor: 0 }])
+    .map(f => ({ min: parseFloat(f.min) || 0, tipo: f.tipo || 'fixa', valor: parseFloat(f.valor) || 0 }))
+    .sort((a, b) => a.min - b.min);
+  let aplicada = lista[0] || { min: 0, tipo: 'fixa', valor: 0 };
+  lista.forEach(f => { if ((parseFloat(qtd) || 0) >= f.min) aplicada = f; });
+  return aplicada;
+}
+
+function calcComissao(faixas, qtd, baseUnidade) {
+  const f = getFaixaComissao(faixas, qtd);
+  const valorUnit = f.tipo === 'percentual' ? baseUnidade * (f.valor / 100) : f.valor;
+  return { faixa: f, valorUnit: valorUnit || 0, valorTotal: (valorUnit || 0) * (parseFloat(qtd) || 0) };
+}
+
+function descComissaoCalc(calc, baseLabel) {
+  const f = calc.faixa || { min: 0, tipo: 'fixa', valor: 0 };
+  const tipo = f.tipo === 'percentual' ? `${fmtN(f.valor, 2)}% ${baseLabel}` : `R$ ${fmtBR(f.valor)}`;
+  return `acima de ${fmtN(f.min, 0)} un. · ${tipo}`;
+}
+
 function calcProd(p) {
+  const qtd = parseFloat(p.qtdVendida) || 0;
+  const preco = parseFloat(p.precoVenda) || 0;
+  const comExt = calcComissao(p.comissaoExternaFaixas, qtd, preco);
+
   if (p.tipo === 'revendido') {
-    const total  = parseFloat(p.precoCompra) || 0;
-    const markup = total > 0 && p.precoVenda > 0 ? p.precoVenda / total : null;
-    return { maoObraInterna: 0, maoObraExterna: 0, maoObraTotal: 0, matPrima: 0, custosAdic: 0, total, markup, fat: p.precoVenda * p.qtdVendida };
+    const precoCompra  = parseFloat(p.precoCompra) || 0;
+    const total  = precoCompra + comExt.valorUnit;
+    const markup = total > 0 && preco > 0 ? preco / total : null;
+    return { maoObraInterna: 0, maoObraExterna: 0, maoObraTotal: 0, matPrima: 0, custosAdic: comExt.valorUnit, comissaoInterna: 0, comissaoExterna: comExt.valorUnit, total, markup, fat: preco * qtd, comExtCalc: comExt, comIntCalc: null };
   }
+
   const cm    = getCustoMin();
   const tempo = parseFloat(p.tempo) || 0;
-  // Custo/minuto × tempo total do processo (sem multiplicar por funcionários)
-  const moInterna   = tempo * cm + (parseFloat(p.comissaoInterna) || 0);
+  const comInt = calcComissao(p.comissaoInternaFaixas || [{ min: 0, tipo: 'fixa', valor: p.comissaoInterna || 0 }], qtd, preco);
+  // Custo/minuto × tempo total do processo (sem multiplicar por funcionários) + comissão interna por unidade
+  const moInterna   = tempo * cm + comInt.valorUnit;
   const moExternaSum= (p.maoObraExterna || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
   const matPrima    = (p.matPrima       || []).reduce((a, i) => a + (parseFloat(i.valor) || 0) * (parseFloat(i.qtd) || 1), 0);
-  const custosAdic  = (p.custosAdic     || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
+  const custosAdicBase  = (p.custosAdic || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
+  const custosAdic  = custosAdicBase + comExt.valorUnit;
 
   let maoObraTotal;
   const moTipo = p.moTipo || 'interna';
@@ -495,9 +556,9 @@ function calcProd(p) {
   else /* ambas */            maoObraTotal = moInterna + moExternaSum;
 
   const total  = maoObraTotal + matPrima + custosAdic;
-  const markup = total > 0 && p.precoVenda > 0 ? p.precoVenda / total : null;
-  const fat    = p.precoVenda * p.qtdVendida;
-  return { maoObraInterna: moInterna, maoObraExterna: moExternaSum, maoObraTotal, matPrima, custosAdic, total, markup, fat };
+  const markup = total > 0 && preco > 0 ? preco / total : null;
+  const fat    = preco * qtd;
+  return { maoObraInterna: moInterna, maoObraExterna: moExternaSum, maoObraTotal, matPrima, custosAdic, comissaoInterna: comInt.valorUnit, comissaoExterna: comExt.valorUnit, total, markup, fat, comIntCalc: comInt, comExtCalc: comExt };
 }
 
 // ══════════════════════════════════════════
@@ -688,6 +749,42 @@ function addCustoAdicRow(desc='', valor='') {
   calcProdModal();
 }
 
+
+function addComissaoRow(tipo, min=0, comTipo='fixa', valor=0) {
+  const list = document.getElementById(tipo === 'interna' ? 'lista-comissao-interna' : 'lista-comissao-externa');
+  if (!list) return;
+  const d = document.createElement('div');
+  d.className = 'comissao-item';
+  const baseHint = tipo === 'interna' ? '% sobre preço de venda' : '% sobre faturamento';
+  d.innerHTML = `
+    <div class="fg"><label>Acima de qtd.</label><input type="number" class="com-min" min="0" step="1" value="${min}" oninput="calcProdModal()"></div>
+    <div class="fg"><label>Tipo</label><select class="com-tipo" onchange="calcProdModal()"><option value="fixa"${comTipo === 'fixa' ? ' selected' : ''}>Fixa (R$)</option><option value="percentual"${comTipo === 'percentual' ? ' selected' : ''}>Percentual (%)</option></select><div class="hint">${baseHint}</div></div>
+    <div class="fg"><label>Valor</label><input type="number" class="com-valor" min="0" step="0.01" value="${valor}" oninput="calcProdModal()"></div>
+    <button class="remove-row" onclick="this.parentElement.remove();ensureComissaoMin('${tipo}');calcProdModal()">×</button>`;
+  list.appendChild(d);
+  ensureComissaoMin(tipo);
+  calcProdModal();
+}
+
+function ensureComissaoMin(tipo) {
+  const list = document.getElementById(tipo === 'interna' ? 'lista-comissao-interna' : 'lista-comissao-externa');
+  if (!list || list.children.length) return;
+  addComissaoRow(tipo, 0, 'fixa', 0);
+}
+
+function readComissaoRows(tipo) {
+  const sel = tipo === 'interna' ? '#lista-comissao-interna .comissao-item' : '#lista-comissao-externa .comissao-item';
+  const rows = [];
+  document.querySelectorAll(sel).forEach(row => {
+    rows.push({
+      min: parseFloat(row.querySelector('.com-min')?.value) || 0,
+      tipo: row.querySelector('.com-tipo')?.value || 'fixa',
+      valor: parseFloat(row.querySelector('.com-valor')?.value) || 0
+    });
+  });
+  return rows.sort((a,b)=>a.min-b.min);
+}
+
 // ══════════════════════════════════════════
 // CALC MODAL
 // ══════════════════════════════════════════
@@ -697,11 +794,17 @@ function calcProdModal() {
   const qtd    = parseFloat(document.getElementById('inp-prod-qtd').value)   || 0;
   let total = 0, moTotal = 0, mp = 0, ca = 0;
 
+  ensureComissaoMin('externa');
+  if (document.getElementById('lista-comissao-interna')) ensureComissaoMin('interna');
+
+  const comExt = calcComissao(readComissaoRows('externa'), qtd, preco);
+  ca += comExt.valorUnit;
+
   if (isProd) {
     const tempo    = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
-    const comissao = parseFloat(document.getElementById('inp-comissao-interna').value) || 0;
     const cm       = getCustoMin();
-    const moInt    = tempo * cm + comissao;
+    const comInt   = calcComissao(readComissaoRows('interna'), qtd, preco);
+    const moInt    = tempo * cm + comInt.valorUnit;
     const moTipo   = document.getElementById('inp-mo-tipo').value;
     let moExt = 0;
     document.querySelectorAll('#lista-mao-obra .mo-val').forEach(el => { moExt += parseFloat(el.value) || 0; });
@@ -713,13 +816,13 @@ function calcProdModal() {
     else if (moTipo === 'externa') moTotal = moExt;
     else moTotal = moInt + moExt;
     total = moTotal + mp + ca;
-    // Preview interna
     document.getElementById('pm-mo-interna-preview').value = 'R$ ' + fmtBR(moInt);
-    // Sub label
+    document.getElementById('pm-comissao-interna-preview').value = 'R$ ' + fmtBR(comInt.valorUnit) + ' · ' + descComissaoCalc(comInt, 'do preço');
     const subMap = { interna: 'Apenas interna', externa: 'Apenas externa', ambas: 'Interna + Externa' };
     document.getElementById('pm-mo-sub').textContent = subMap[moTipo] || '';
   } else {
-    total = parseFloat(document.getElementById('inp-prod-compra').value) || 0;
+    const precoCompra = parseFloat(document.getElementById('inp-prod-compra').value) || 0;
+    total = precoCompra + ca;
   }
 
   const markup = total > 0 && preco > 0 ? preco / total : null;
@@ -741,7 +844,7 @@ function calcProdModal() {
 function openModalProduto(id = null) {
   S.editProdId = id;
   // reset
-  ['lista-mao-obra','lista-mat-prima','lista-custos-adic'].forEach(lid => document.getElementById(lid).innerHTML = '');
+  ['lista-mao-obra','lista-mat-prima','lista-custos-adic','lista-comissao-interna','lista-comissao-externa'].forEach(lid => { const el=document.getElementById(lid); if(el) el.innerHTML = ''; });
   ['lista-mao-obra-empty','lista-mat-prima-empty','lista-custos-adic-empty'].forEach(eid => document.getElementById(eid).style.display = 'block');
 
   let tipo = 'produzido', moTipo = 'interna';
@@ -753,9 +856,10 @@ function openModalProduto(id = null) {
     document.getElementById('inp-prod-nome').value   = p.nome;
     document.getElementById('inp-prod-preco').value  = p.precoVenda;
     document.getElementById('inp-prod-qtd').value    = p.qtdVendida;
+    (p.comissaoExternaFaixas || [{ min: 0, tipo: 'fixa', valor: 0 }]).forEach(f => addComissaoRow('externa', f.min, f.tipo, f.valor));
     if (tipo === 'produzido') {
       document.getElementById('inp-prod-tempo').value       = p.tempo;
-      document.getElementById('inp-comissao-interna').value = p.comissaoInterna || 0;
+      (p.comissaoInternaFaixas || [{ min: 0, tipo: 'fixa', valor: p.comissaoInterna || 0 }]).forEach(f => addComissaoRow('interna', f.min, f.tipo, f.valor));
       document.getElementById('inp-mo-tipo').value          = moTipo;
       (p.maoObraExterna || []).forEach(i => addMaoObraRow(i.desc, i.valor));
       (p.matPrima       || []).forEach(i => addMatPrimaRow(i.desc, i.valor, i.qtd));
@@ -769,8 +873,9 @@ function openModalProduto(id = null) {
     document.getElementById('inp-prod-preco').value         = '0';
     document.getElementById('inp-prod-qtd').value           = '0';
     document.getElementById('inp-prod-tempo').value         = '0';
-    document.getElementById('inp-comissao-interna').value   = '0';
     document.getElementById('inp-prod-compra').value        = '0';
+    addComissaoRow('externa', 0, 'fixa', 0);
+    addComissaoRow('interna', 0, 'fixa', 0);
     document.getElementById('inp-mo-tipo').value            = 'interna';
   }
 
@@ -792,11 +897,12 @@ function salvarProduto() {
   const isProd = document.getElementById('painel-produzido').style.display !== 'none';
   const tipo   = isProd ? 'produzido' : 'revendido';
 
-  let obj = { nome, tipo, precoVenda: preco, qtdVendida: qtd, precoCompra: 0, tempo: 0, moTipo: 'interna', comissaoInterna: 0, maoObraExterna: [], matPrima: [], custosAdic: [] };
+  let obj = { nome, tipo, precoVenda: preco, qtdVendida: qtd, precoCompra: 0, tempo: 0, moTipo: 'interna', comissaoInterna: 0, comissaoInternaFaixas: [], comissaoExternaFaixas: readComissaoRows('externa'), maoObraExterna: [], matPrima: [], custosAdic: [] };
 
   if (isProd) {
     obj.tempo           = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
-    obj.comissaoInterna = parseFloat(document.getElementById('inp-comissao-interna').value) || 0;
+    obj.comissaoInternaFaixas = readComissaoRows('interna');
+    obj.comissaoInterna = obj.comissaoInternaFaixas[0]?.valor || 0;
     obj.moTipo          = document.getElementById('inp-mo-tipo').value;
     document.querySelectorAll('#lista-mao-obra .insumo-item').forEach(row => {
       const desc = row.querySelector('.mo-desc')?.value.trim() || '';
@@ -924,7 +1030,7 @@ function renderDashboard() {
         ?`<div class="breakdown-row"><span class="breakdown-label">🛒 Preço de Compra</span><span class="breakdown-val">R$ ${fmtBR(p.total)}</span></div>`
         :`<div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#0d2a5e"></span>Mão de Obra</span><span class="breakdown-val">R$ ${fmtBR(p.maoObraTotal)}<span class="breakdown-pct">${p.total>0?((p.maoObraTotal/p.total)*100).toFixed(1)+'%':''}</span></span></div>
           <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#b8922a"></span>Matéria Prima</span><span class="breakdown-val">R$ ${fmtBR(p.matPrima)}<span class="breakdown-pct">${p.total>0?((p.matPrima/p.total)*100).toFixed(1)+'%':''}</span></span></div>
-          <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#15803d"></span>Custos Adicionais</span><span class="breakdown-val">R$ ${fmtBR(p.custosAdic)}<span class="breakdown-pct">${p.total>0?((p.custosAdic/p.total)*100).toFixed(1)+'%':''}</span></span></div>`
+          <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#15803d"></span>Custos Adicionais + Comissão Externa</span><span class="breakdown-val">R$ ${fmtBR(p.custosAdic)}<span class="breakdown-pct">${p.total>0?((p.custosAdic/p.total)*100).toFixed(1)+'%':''}</span></span></div>`
       }
       <div class="breakdown-row" style="background:var(--sf2);border-radius:6px;padding:4px 8px"><span class="breakdown-label" style="font-weight:700;color:var(--tx)">Custo Total</span><span class="breakdown-val"><strong>R$ ${fmtBR(p.total)}</strong></span></div>
     </div>${i<computed.length-1?'<div class="sep" style="margin:8px 0"></div>':''}`;
