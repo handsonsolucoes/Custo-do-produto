@@ -21,20 +21,17 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* TOPBAR */
 .topbar{background:linear-gradient(90deg,#080e1e 0%,#0d2145 40%,#0d2a5e 70%,#112254 100%);color:#fff;height:56px;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.4);gap:12px}
 .brand-icon{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .brand-name{font-size:15px;font-weight:800;letter-spacing:-.2px}
 .brand-sub{font-size:10px;opacity:.65;letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
 
-/* TABS */
 .tab-bar{background:var(--sf);border-bottom:1px solid var(--bd2);display:flex;align-items:center;padding:0 24px;gap:2px;box-shadow:var(--sh);position:sticky;top:56px;z-index:40;overflow-x:auto}
 .tab{padding:14px 18px;font-size:13px;font-weight:600;color:var(--tx3);cursor:pointer;border-bottom:2.5px solid transparent;display:flex;align-items:center;gap:7px;transition:all .18s;white-space:nowrap;user-select:none}
 .tab:hover{color:var(--tx2);border-bottom-color:var(--bd)}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 .tab svg{width:15px;height:15px;flex-shrink:0}
 
-/* LAYOUT */
 .main{padding:22px 24px;max-width:1600px;margin:0 auto}
 @media(max-width:680px){.main{padding:14px}}
 .page{display:none}.page.active{display:block}
@@ -43,7 +40,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sec-sub{font-size:13px;color:var(--tx3);margin-top:2px}
 .sec-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-/* BUTTONS */
 .btn{padding:8px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all .18s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .btn svg{width:15px;height:15px;flex-shrink:0}
 .btn-primary{background:var(--ac);color:#fff;box-shadow:0 2px 8px rgba(13,42,94,.3)}
@@ -57,10 +53,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .btn-gold{background:var(--gold);color:#fff;box-shadow:0 2px 8px rgba(184,146,42,.3)}
 .btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
 .btn-sm{padding:6px 12px;font-size:12px}
-.btn-icon{padding:6px;border-radius:7px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center}
-.btn-icon svg{width:16px;height:16px}
 
-/* KPIs */
+/* Tipo toggle no topo do modal */
+.tipo-toggle{display:flex;gap:0;border:1.5px solid var(--bd);border-radius:var(--rs);overflow:hidden;margin-bottom:16px}
+.tipo-opt{flex:1;padding:10px 14px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--sf);color:var(--tx3);border:none;font-family:inherit;transition:all .18s;border-right:1px solid var(--bd)}
+.tipo-opt:last-child{border-right:none}
+.tipo-opt.active-prod{background:#e6eaf5;color:#0d2a5e}
+.tipo-opt.active-rev{background:#fdf5e0;color:#b8922a}
+.tipo-opt:hover:not(.active-prod):not(.active-rev){background:var(--sf2)}
+
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:16px}
 .kpi{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd2);padding:15px 18px;box-shadow:var(--sh);position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);border-radius:var(--r) var(--r) 0 0}
@@ -70,22 +71,20 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .kpi-value.gn{color:var(--gn)}.kpi-value.rd{color:var(--rd)}.kpi-value.bl{color:var(--ac)}.kpi-value.gd{color:var(--gold)}
 .kpi-sub{font-size:11px;color:var(--tx3);margin-top:4px;font-weight:500}
 
-/* CARD */
 .card{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd2);padding:20px;box-shadow:var(--sh);margin-bottom:14px}
 .card-title{font-size:12px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
 
-/* GRIDS */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr 1fr}}
 @media(max-width:580px){.grid-2,.grid-3{grid-template-columns:1fr}}
 
-/* FORM */
 .fg{margin-bottom:12px}
 .fg label{display:block;font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
 .fg input,.fg select{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:13px;color:var(--tx);outline:none;background:var(--sf);font-family:inherit;transition:border-color .15s}
 .fg input:focus,.fg select:focus{border-color:var(--ac2)}
 .fg .hint{font-size:11px;color:var(--tx3);margin-top:3px;font-weight:400;text-transform:none;letter-spacing:0}
+.computed{background:var(--sf2) !important;color:var(--tx2) !important;font-weight:600;cursor:default}
 
 /* TABLE */
 .tbl-wrap{border-radius:var(--r);border:1px solid var(--bd2);overflow:auto}
@@ -93,8 +92,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .tbl thead th{background:#ecedf2;padding:9px 11px;text-align:left;font-weight:700;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--tx2);border-bottom:1px solid var(--bd);white-space:nowrap;position:sticky;top:0;z-index:2;user-select:none}
 .tbl thead th.sortable{cursor:pointer}
 .tbl thead th.sortable:hover{background:#e0e2ec;color:var(--ac)}
-.tbl thead th .sort-icon{display:inline-block;margin-left:4px;opacity:.4;font-style:normal;font-size:10px}
-.tbl thead th.sort-asc .sort-icon,.tbl thead th.sort-desc .sort-icon{opacity:1;color:var(--gold)}
+.tbl thead th .si{display:inline-block;margin-left:4px;opacity:.35;font-style:normal;font-size:10px}
+.tbl thead th.sort-asc .si,.tbl thead th.sort-desc .si{opacity:1;color:var(--gold)}
 .tbl thead th.r,.tbl td.r{text-align:right}
 .tbl td{padding:8px 11px;border-bottom:1px solid var(--bd2);white-space:nowrap;vertical-align:middle}
 .tbl td.r{font-variant-numeric:tabular-nums}
@@ -103,7 +102,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .tbl tfoot td{background:#e9eaf0;font-weight:700;border-top:1px solid rgba(0,0,0,.1);padding:9px 11px}
 .tbl tfoot td.r{text-align:right}
 
-/* TIPO BADGE (clicável) */
+/* TIPO BADGE clicável na tabela */
 .tipo-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .18s;white-space:nowrap}
 .tipo-btn.produzido{background:#e6eaf5;color:#0d2a5e}
 .tipo-btn.produzido:hover{background:#cdd5ef}
@@ -114,39 +113,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .action-cell{display:flex;gap:5px;justify-content:center;align-items:center}
 .act-btn{width:30px;height:30px;border-radius:7px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
 .act-btn svg{width:15px;height:15px}
-.act-btn.edit{background:var(--acb);color:var(--ac)}
-.act-btn.edit:hover{background:var(--ac);color:#fff}
-.act-btn.del{background:var(--rdb);color:var(--rd)}
-.act-btn.del:hover{background:var(--rd);color:#fff}
+.act-btn.edit{background:var(--acb);color:var(--ac)}.act-btn.edit:hover{background:var(--ac);color:#fff}
+.act-btn.del{background:var(--rdb);color:var(--rd)}.act-btn.del:hover{background:var(--rd);color:#fff}
 
-/* MARKUP BADGE */
 .mk-badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:700}
-.mk-hi{background:var(--gnb);color:var(--gn)}
-.mk-md{background:#fef3c7;color:#92400e}
-.mk-lo{background:var(--rdb);color:var(--rd)}
-.mk-na{background:var(--sf2);color:var(--tx3)}
+.mk-hi{background:var(--gnb);color:var(--gn)}.mk-md{background:#fef3c7;color:#92400e}.mk-lo{background:var(--rdb);color:var(--rd)}.mk-na{background:var(--sf2);color:var(--tx3)}
 
-/* COLORS */
 .gn{color:var(--gn)}.rd{color:var(--rd)}.bl{color:var(--ac)}.gd{color:var(--gold)}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
-.bg-gn{background:var(--gnb);color:var(--gn)}.bg-rd{background:var(--rdb);color:var(--rd)}.bg-am{background:#fef3c7;color:#92400e}.bg-bl{background:var(--acb);color:var(--ac)}
 
-/* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--tx3)}
 .empty-icon{font-size:38px;margin-bottom:12px}.empty-title{font-size:15px;font-weight:600;color:var(--tx2);margin-bottom:6px}.empty-sub{font-size:12.5px;max-width:300px;margin:0 auto;line-height:1.5}
 
-/* MODAL */
 .mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;padding:16px}
 .mov.open{display:flex}
-.modal{background:var(--sf);border-radius:16px;width:640px;max-width:100%;max-height:90vh;overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.22)}
-.modal.modal-lg{width:820px}
-.mh{padding:18px 22px 14px;border-bottom:1px solid var(--bd2);display:flex;justify-content:space-between;align-items:center}
+.modal{background:var(--sf);border-radius:16px;width:820px;max-width:100%;max-height:92vh;overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.22)}
+.mh{padding:18px 22px 14px;border-bottom:1px solid var(--bd2);display:flex;justify-content:space-between;align-items:flex-start}
 .mt{font-size:16px;font-weight:700}
-.mx{background:none;border:none;font-size:22px;cursor:pointer;color:var(--tx2);line-height:1;padding:2px 6px;font-family:inherit}
+.mx{background:none;border:none;font-size:22px;cursor:pointer;color:var(--tx2);line-height:1;padding:2px 6px;font-family:inherit;flex-shrink:0}
 .mb{padding:18px 22px}
 .mf{padding:14px 22px;border-top:1px solid var(--bd2);display:flex;justify-content:flex-end;gap:9px}
 
-/* INSUMO SECTIONS */
 .insumo-section{background:var(--sf2);border-radius:var(--rs);padding:14px;margin-bottom:10px;border:1px solid var(--bd2)}
 .insumo-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--tx2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
 .insumo-item{display:grid;gap:8px;align-items:end;margin-bottom:8px}
@@ -155,21 +141,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .remove-row{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:18px;line-height:1;padding:0 6px;border-radius:6px;transition:all .15s;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .remove-row:hover{background:var(--rdb);color:var(--rd)}
 
-/* REVENDA PANEL */
 .revenda-panel{background:#fffbeb;border:1.5px solid #fde68a;border-radius:var(--rs);padding:14px;margin-bottom:10px}
-.revenda-panel .fg{margin-bottom:0}
 
-/* SEP */
-.sep{height:1px;background:var(--bd2);margin:16px 0}
+.sep{height:1px;background:var(--bd2);margin:14px 0}
 
-/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--tx);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;max-width:310px;font-weight:500}
 .toast.show{opacity:1;transform:none}.toast.success{background:var(--gn)}.toast.error{background:var(--rd)}
 
-/* INFO BANNER */
 .info-banner{background:var(--acb);border:1px solid rgba(13,42,94,.18);border-radius:var(--rs);padding:11px 14px;font-size:12px;color:var(--ac);margin-bottom:14px;line-height:1.6}
 
-/* DASHBOARD */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 @media(max-width:900px){.chart-grid{grid-template-columns:1fr}}
 .chart-card{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd2);padding:18px;box-shadow:var(--sh)}
@@ -182,13 +162,11 @@ canvas{max-height:220px}
 .breakdown-val{font-weight:700}
 .breakdown-pct{font-size:11px;color:var(--tx3);margin-left:5px}
 
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18">
@@ -198,7 +176,6 @@ canvas{max-height:220px}
   <div><div class="brand-name">Hands On</div><div class="brand-sub">Precificação Industrial</div></div>
 </div>
 
-<!-- TABS -->
 <div class="tab-bar">
   <div class="tab active" id="tab-config" onclick="showPage('config')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 20.12 7"/></svg>
@@ -216,50 +193,36 @@ canvas{max-height:220px}
 
 <div class="main">
 
-<!-- ═══════════ ABA 1: CONFIGURAÇÃO ═══════════ -->
+<!-- ═══ ABA 1: CONFIG ═══ -->
 <div class="page active" id="page-config">
   <div class="sec-head">
     <div><div class="sec-title">Configuração de Produção</div><div class="sec-sub">Parâmetros base que calculam o custo por minuto da operação</div></div>
   </div>
   <div class="info-banner">
-    💡 Ao cadastrar um produto, informe o tempo de produção de <strong>um funcionário</strong>. O sistema multiplica automaticamente pelo número de funcionários configurado aqui.
+    💡 O <strong>Custo por Minuto</strong> representa o custo da linha de produção inteira por minuto trabalhado, considerando todos os funcionários e a eficiência operacional. Ao cadastrar um produto, informe o <strong>tempo total</strong> do processo produtivo.
   </div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">⚙️ Parâmetros da Produção</div>
-      <div class="fg">
-        <label>Custo Total da Produção (R$)</label>
-        <input type="number" id="custoProd" value="10000" min="0" step="100" oninput="calcParams()">
-        <div class="hint">Total de custos fixos do período (aluguel, energia, salários fixos, etc.)</div>
-      </div>
-      <div class="fg">
-        <label>Número de Funcionários na Produção</label>
-        <input type="number" id="numFunc" value="1" min="1" step="1" oninput="calcParams()">
-      </div>
-      <div class="fg">
-        <label>Horas Disponíveis por Funcionário (no período)</label>
-        <input type="number" id="tempoHoras" value="180" min="1" step="1" oninput="calcParams()">
-        <div class="hint">Horas de <em>um</em> funcionário no período (ex: 180h/mês)</div>
-      </div>
-      <div class="fg">
-        <label>Eficiência da Produção (%)</label>
-        <input type="number" id="eficiencia" value="70" min="1" max="100" step="1" oninput="calcParams()">
-      </div>
+      <div class="card-title">⚙️ Parâmetros</div>
+      <div class="fg"><label>Custo Total da Produção (R$)</label><input type="number" id="custoProd" value="10000" min="0" step="100" oninput="calcParams()"><div class="hint">Custos fixos do período: aluguel, energia, salários fixos, etc.</div></div>
+      <div class="fg"><label>Número de Funcionários na Produção</label><input type="number" id="numFunc" value="1" min="1" step="1" oninput="calcParams()"></div>
+      <div class="fg"><label>Horas Disponíveis por Funcionário (no período)</label><input type="number" id="tempoHoras" value="180" min="1" step="1" oninput="calcParams()"><div class="hint">Ex: 180h/mês por pessoa</div></div>
+      <div class="fg"><label>Eficiência da Produção (%)</label><input type="number" id="eficiencia" value="70" min="1" max="100" step="1" oninput="calcParams()"></div>
     </div>
     <div class="card">
       <div class="card-title">📊 Resultados Calculados</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <div class="kpi kpi-bl"><div class="kpi-label">Funcionários</div><div class="kpi-value bl" id="res-func">1</div><div class="kpi-sub">Na produção</div></div>
+        <div class="kpi kpi-bl"><div class="kpi-label">Funcionários</div><div class="kpi-value bl" id="res-func">1</div></div>
         <div class="kpi"><div class="kpi-label">Horas Totais da Equipe</div><div class="kpi-value" id="res-horas-total">180</div><div class="kpi-sub">Func. × Horas/pessoa</div></div>
-        <div class="kpi kpi-am"><div class="kpi-label">Minutos Disponíveis</div><div class="kpi-value gd" id="res-min-disp">10.800</div><div class="kpi-sub">Horas totais × 60</div></div>
+        <div class="kpi kpi-am"><div class="kpi-label">Minutos Disponíveis</div><div class="kpi-value gd" id="res-min-disp">10.800</div></div>
         <div class="kpi"><div class="kpi-label">Minutos Efetivos</div><div class="kpi-value" id="res-min-ef">7.560</div><div class="kpi-sub">Com eficiência</div></div>
       </div>
-      <div class="kpi" style="margin-bottom:0">
+      <div class="kpi kpi-gn">
         <div class="kpi-label">⚡ Custo por Minuto (equipe toda)</div>
         <div class="kpi-value gd" id="res-custo-min">R$ 1,3228</div>
         <div class="kpi-sub">Custo Total ÷ Minutos Efetivos</div>
       </div>
-      <div style="height:1px;background:var(--bd2);margin:14px 0"></div>
+      <div class="sep"></div>
       <div style="font-size:11.5px;color:var(--tx3);line-height:1.9">
         <strong style="color:var(--tx2)">Fórmulas:</strong><br>
         Horas Totais = Funcionários × Horas/Funcionário<br>
@@ -270,10 +233,10 @@ canvas{max-height:220px}
   </div>
 </div>
 
-<!-- ═══════════ ABA 2: PRODUTOS ═══════════ -->
+<!-- ═══ ABA 2: PRODUTOS ═══ -->
 <div class="page" id="page-produtos">
   <div class="sec-head">
-    <div><div class="sec-title">Produtos</div><div class="sec-sub">Clique na prancheta para editar · Clique em "Produzido/Revendido" para alternar o tipo</div></div>
+    <div><div class="sec-title">Produtos</div><div class="sec-sub">Clique na prancheta para editar · Clique em "Produzido / Revendido" para alternar o tipo diretamente</div></div>
     <div class="sec-actions">
       <button class="btn btn-gold" onclick="exportarExcel()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -285,13 +248,10 @@ canvas{max-height:220px}
       </button>
     </div>
   </div>
-
   <div class="card" style="padding:0;overflow:hidden">
     <div class="tbl-wrap" style="border-radius:var(--r);border:none;max-height:75vh">
-      <table class="tbl" id="tbl-produtos">
-        <thead id="thead-produtos">
-          <!-- rendered by JS -->
-        </thead>
+      <table class="tbl">
+        <thead id="thead-produtos"></thead>
         <tbody id="tbody-produtos">
           <tr><td colspan="12"><div class="empty"><div class="empty-icon">🏭</div><div class="empty-title">Nenhum produto cadastrado</div><div class="empty-sub">Clique em "Novo Produto" para começar</div></div></td></tr>
         </tbody>
@@ -301,12 +261,10 @@ canvas{max-height:220px}
   </div>
 </div>
 
-<!-- ═══════════ ABA 3: DASHBOARD ═══════════ -->
+<!-- ═══ ABA 3: DASHBOARD ═══ -->
 <div class="page" id="page-dashboard">
-  <div class="sec-head">
-    <div><div class="sec-title">Dashboard</div><div class="sec-sub">Visão geral da rentabilidade e composição de custos</div></div>
-  </div>
-  <div id="dashboard-empty"><div class="empty"><div class="empty-icon">📊</div><div class="empty-title">Nenhum produto cadastrado</div><div class="empty-sub">Cadastre produtos para visualizar o dashboard</div></div></div>
+  <div class="sec-head"><div><div class="sec-title">Dashboard</div><div class="sec-sub">Visão geral da rentabilidade e composição de custos</div></div></div>
+  <div id="dashboard-empty"><div class="empty"><div class="empty-icon">📊</div><div class="empty-title">Nenhum produto cadastrado</div></div></div>
   <div id="dashboard-content" style="display:none">
     <div class="kpi-grid" id="dash-kpis"></div>
     <div class="chart-grid">
@@ -322,52 +280,77 @@ canvas{max-height:220px}
 
 </div><!-- /main -->
 
-<!-- ═══════════ MODAL PRODUTO ═══════════ -->
+<!-- ═══ MODAL PRODUTO ═══ -->
 <div class="mov" id="modal-produto">
-  <div class="modal modal-lg">
+  <div class="modal">
     <div class="mh">
-      <div>
-        <div class="mt" id="modal-prod-title">Novo Produto</div>
-        <div style="font-size:12px;color:var(--tx3);margin-top:3px" id="modal-prod-tipo-label"></div>
-      </div>
+      <div><div class="mt" id="modal-prod-title">Novo Produto</div></div>
       <button class="mx" onclick="closeModal('modal-produto')">×</button>
     </div>
     <div class="mb">
 
-      <!-- DADOS BÁSICOS -->
-      <div class="grid-2" style="margin-bottom:4px">
-        <div class="fg">
-          <label>Nome do Produto</label>
-          <input type="text" id="inp-prod-nome" placeholder="Ex: Produto A">
-        </div>
-        <div class="fg">
-          <label>Preço de Venda (R$)</label>
-          <input type="number" id="inp-prod-preco" min="0" step="0.01" value="0" oninput="calcProdModal()">
-        </div>
-      </div>
-      <div class="fg" style="margin-bottom:14px">
-        <label>Quantidade Vendida (unidades)</label>
-        <input type="number" id="inp-prod-qtd" min="0" step="1" value="0" oninput="calcProdModal()">
+      <!-- SELETOR TIPO: clicável, visível, no topo -->
+      <div class="tipo-toggle">
+        <button class="tipo-opt active-prod" id="opt-produzido" onclick="setModalTipo('produzido')">⚙️ Produzido</button>
+        <button class="tipo-opt" id="opt-revendido" onclick="setModalTipo('revendido')">🛒 Revendido</button>
       </div>
 
-      <!-- PRODUZIDO -->
+      <!-- DADOS BÁSICOS (sempre visíveis) -->
+      <div class="grid-2">
+        <div class="fg"><label>Nome do Produto</label><input type="text" id="inp-prod-nome" placeholder="Ex: Produto A"></div>
+        <div class="fg"><label>Preço de Venda (R$)</label><input type="number" id="inp-prod-preco" min="0" step="0.01" value="0" oninput="calcProdModal()"></div>
+      </div>
+      <div class="fg" style="margin-bottom:14px"><label>Quantidade Vendida (unidades)</label><input type="number" id="inp-prod-qtd" min="0" step="1" value="0" oninput="calcProdModal()"></div>
+
+      <!-- ═ PAINEL PRODUZIDO ═ -->
       <div id="painel-produzido">
-        <div style="height:1px;background:var(--bd2);margin:0 0 14px"></div>
-        <div class="fg">
-          <label>Tempo de Produção por Funcionário (minutos)</label>
-          <input type="number" id="inp-prod-tempo" min="0" step="1" value="0" oninput="calcProdModal()">
-          <div class="hint">Tempo de <em>um</em> funcionário. Será multiplicado por <strong id="hint-nfunc">1</strong> funcionário(s).</div>
+        <div class="sep" style="margin-top:0"></div>
+
+        <!-- Tempo + Tipo MO lado a lado -->
+        <div class="grid-2">
+          <div class="fg">
+            <label>Tempo Total de Produção (minutos)</label>
+            <input type="number" id="inp-prod-tempo" min="0" step="1" value="0" oninput="calcProdModal()">
+            <div class="hint">Duração total do processo. Multiplicado pelo Custo/Minuto.</div>
+          </div>
+          <div class="fg">
+            <label>Tipo de Mão de Obra</label>
+            <select id="inp-mo-tipo" onchange="onMoTipoChange()">
+              <option value="interna">Apenas Interna (usa custo/minuto)</option>
+              <option value="externa">Apenas Externa (terceirizada)</option>
+              <option value="ambas">Ambas (interna + externa)</option>
+            </select>
+            <div class="hint">Define como o custo de MO é calculado</div>
+          </div>
         </div>
-        <!-- MÃO DE OBRA EXTERNA -->
-        <div class="insumo-section">
+
+        <!-- MO INTERNA -->
+        <div class="insumo-section" id="sec-mo-interna">
+          <div class="insumo-section-title"><span>⚙️ Mão de Obra Interna</span></div>
+          <div class="grid-2">
+            <div class="fg" style="margin-bottom:0">
+              <label>Custo Calculado (Tempo × Custo/Min)</label>
+              <input type="text" id="pm-mo-interna-preview" class="computed" readonly>
+            </div>
+            <div class="fg" style="margin-bottom:0">
+              <label>Comissão do Prestador Interno (R$)</label>
+              <input type="number" id="inp-comissao-interna" min="0" step="0.01" value="0" oninput="calcProdModal()" placeholder="0,00">
+              <div class="hint">Valor fixo somado ao custo interno</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MO EXTERNA -->
+        <div class="insumo-section" id="sec-mo-externa">
           <div class="insumo-section-title">
             <span>👷 Mão de Obra Externa</span>
             <button class="btn btn-outline btn-sm" onclick="addMaoObraRow()">+ Adicionar</button>
           </div>
-          <div style="font-size:11px;color:var(--tx3);margin-bottom:8px">Serviços terceirizados — somados ao custo de mão de obra interna</div>
+          <div style="font-size:11px;color:var(--tx3);margin-bottom:8px">Serviços terceirizados com valor fixo</div>
           <div id="lista-mao-obra"></div>
           <div id="lista-mao-obra-empty" style="font-size:12px;color:var(--tx3);text-align:center;padding:4px 0">Nenhuma</div>
         </div>
+
         <!-- MATÉRIA PRIMA -->
         <div class="insumo-section">
           <div class="insumo-section-title">
@@ -377,6 +360,7 @@ canvas{max-height:220px}
           <div id="lista-mat-prima"></div>
           <div id="lista-mat-prima-empty" style="font-size:12px;color:var(--tx3);text-align:center;padding:4px 0">Nenhuma</div>
         </div>
+
         <!-- CUSTOS ADICIONAIS -->
         <div class="insumo-section">
           <div class="insumo-section-title">
@@ -388,25 +372,24 @@ canvas{max-height:220px}
         </div>
       </div>
 
-      <!-- REVENDIDO -->
+      <!-- ═ PAINEL REVENDIDO ═ -->
       <div id="painel-revendido" style="display:none">
-        <div style="height:1px;background:var(--bd2);margin:0 0 14px"></div>
+        <div class="sep" style="margin-top:0"></div>
         <div class="revenda-panel">
           <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:10px">🛒 Produto Revendido — informe apenas o preço de compra</div>
-          <div class="fg">
+          <div class="fg" style="margin-bottom:0">
             <label>Preço de Compra (R$)</label>
             <input type="number" id="inp-prod-compra" min="0" step="0.01" value="0" oninput="calcProdModal()">
-            <div class="hint">Custo total do produto adquirido para revenda</div>
+            <div class="hint">Custo total do produto adquirido para revenda. O Markup = Preço de Venda ÷ Preço de Compra.</div>
           </div>
         </div>
       </div>
 
-      <div style="height:1px;background:var(--bd2);margin:4px 0 14px"></div>
-
       <!-- RESUMO -->
+      <div class="sep"></div>
       <div class="card-title" style="margin-bottom:10px">📊 Resumo de Custo</div>
-      <div id="resumo-produzido" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
-        <div class="kpi kpi-bl"><div class="kpi-label">Mão de Obra Total</div><div class="kpi-value bl" id="pm-mao-obra">R$ 0,00</div><div class="kpi-sub">Interna + Externa</div></div>
+      <div id="resumo-mo-row" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="kpi kpi-bl"><div class="kpi-label">Mão de Obra Total</div><div class="kpi-value bl" id="pm-mao-obra">R$ 0,00</div><div class="kpi-sub" id="pm-mo-sub">—</div></div>
         <div class="kpi"><div class="kpi-label">Matéria Prima</div><div class="kpi-value" id="pm-mat-prima">R$ 0,00</div></div>
         <div class="kpi kpi-am"><div class="kpi-label">Custos Adicionais</div><div class="kpi-value gd" id="pm-custos-adic">R$ 0,00</div></div>
       </div>
@@ -429,30 +412,31 @@ canvas{max-height:220px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 const S = {
   config: { custoProd: 10000, numFunc: 1, tempoHoras: 180, eficiencia: 70 },
   produtos: [
     {
-      id: 1, nome: 'Produto 1', tipo: 'produzido', tempo: 0, precoVenda: 270, qtdVendida: 10,
-      precoCompra: 0,
+      id: 1, nome: 'Produto 1', tipo: 'produzido',
+      tempo: 30, moTipo: 'ambas',
+      comissaoInterna: 0,
+      precoVenda: 270, qtdVendida: 10, precoCompra: 0,
       maoObraExterna: [{ desc: 'Empresa Terceirizada', valor: 5 }],
-      matPrima:       [{ desc: 'Tecido', valor: 4, qtd: 20 }],
-      custosAdic:     [{ desc: 'Embalagem', valor: 0.07 }]
+      matPrima: [{ desc: 'Tecido', valor: 4, qtd: 20 }],
+      custosAdic: [{ desc: 'Embalagem', valor: 0.07 }]
     }
   ],
   nextId: 2,
   editProdId: null,
-  // sorting
   sortCol: null,
   sortDir: 'asc'
 };
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // NAV
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -461,9 +445,9 @@ function showPage(id) {
   if (id === 'dashboard') renderDashboard();
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CONFIG
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 function calcParams() {
   S.config.custoProd  = parseFloat(document.getElementById('custoProd').value)  || 0;
   S.config.numFunc    = parseFloat(document.getElementById('numFunc').value)    || 1;
@@ -486,32 +470,39 @@ function getCustoMin() {
   return minEf > 0 ? S.config.custoProd / minEf : 0;
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CALC PRODUTO
-// ═══════════════════════════════════════════════
+// MO tipo: 'interna' = só custo/min | 'externa' = só lista externa | 'ambas' = soma
+// ══════════════════════════════════════════
 function calcProd(p) {
   if (p.tipo === 'revendido') {
     const total  = parseFloat(p.precoCompra) || 0;
     const markup = total > 0 && p.precoVenda > 0 ? p.precoVenda / total : null;
-    const fat    = p.precoVenda * p.qtdVendida;
-    return { maoObraInterna: 0, maoObraExterna: 0, maoObraTotal: 0, matPrima: 0, custosAdic: 0, total, markup, fat, tempoTotal: 0 };
+    return { maoObraInterna: 0, maoObraExterna: 0, maoObraTotal: 0, matPrima: 0, custosAdic: 0, total, markup, fat: p.precoVenda * p.qtdVendida };
   }
-  const cm             = getCustoMin();
-  const tempoTotal     = p.tempo * S.config.numFunc;
-  const maoObraInterna = tempoTotal * cm;
-  const maoObraExterna = (p.maoObraExterna || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
-  const matPrima       = (p.matPrima       || []).reduce((a, i) => a + (parseFloat(i.valor) || 0) * (parseFloat(i.qtd) || 1), 0);
-  const custosAdic     = (p.custosAdic     || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
-  const maoObraTotal   = maoObraInterna + maoObraExterna;
-  const total          = maoObraTotal + matPrima + custosAdic;
-  const markup         = total > 0 && p.precoVenda > 0 ? p.precoVenda / total : null;
-  const fat            = p.precoVenda * p.qtdVendida;
-  return { maoObraInterna, maoObraExterna, maoObraTotal, matPrima, custosAdic, total, markup, fat, tempoTotal };
+  const cm    = getCustoMin();
+  const tempo = parseFloat(p.tempo) || 0;
+  // Custo/minuto × tempo total do processo (sem multiplicar por funcionários)
+  const moInterna   = tempo * cm + (parseFloat(p.comissaoInterna) || 0);
+  const moExternaSum= (p.maoObraExterna || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
+  const matPrima    = (p.matPrima       || []).reduce((a, i) => a + (parseFloat(i.valor) || 0) * (parseFloat(i.qtd) || 1), 0);
+  const custosAdic  = (p.custosAdic     || []).reduce((a, i) => a + (parseFloat(i.valor) || 0), 0);
+
+  let maoObraTotal;
+  const moTipo = p.moTipo || 'interna';
+  if (moTipo === 'interna')  maoObraTotal = moInterna;
+  else if (moTipo === 'externa') maoObraTotal = moExternaSum;
+  else /* ambas */            maoObraTotal = moInterna + moExternaSum;
+
+  const total  = maoObraTotal + matPrima + custosAdic;
+  const markup = total > 0 && p.precoVenda > 0 ? p.precoVenda / total : null;
+  const fat    = p.precoVenda * p.qtdVendida;
+  return { maoObraInterna: moInterna, maoObraExterna: moExternaSum, maoObraTotal, matPrima, custosAdic, total, markup, fat };
 }
 
-// ═══════════════════════════════════════════════
-// TOGGLE TIPO
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
+// TABLE TOGGLE TIPO
+// ══════════════════════════════════════════
 function toggleTipo(id) {
   const p = S.produtos.find(x => x.id === id);
   if (!p) return;
@@ -519,86 +510,74 @@ function toggleTipo(id) {
   renderProdutos();
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // SORTING
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 const COLS = [
   { key: 'tipo',        label: 'Tipo',           type: 'text' },
   { key: 'nome',        label: 'Produto',        type: 'text' },
-  { key: 'tempo',       label: 'Tempo/pessoa',   type: 'num',  unit: 'min' },
-  { key: 'maoObraTotal',label: 'Mão de Obra',    type: 'num',  calc: true },
-  { key: 'matPrima',    label: 'Mat. Prima',     type: 'num',  calc: true },
-  { key: 'custosAdic',  label: 'Custos Adic.',   type: 'num',  calc: true },
-  { key: 'total',       label: 'Custo Total',    type: 'num',  calc: true },
+  { key: 'tempo',       label: 'Tempo (min)',     type: 'num' },
+  { key: 'maoObraTotal',label: 'Mão de Obra',    type: 'num', calc: true },
+  { key: 'matPrima',    label: 'Mat. Prima',     type: 'num', calc: true },
+  { key: 'custosAdic',  label: 'Custos Adic.',   type: 'num', calc: true },
+  { key: 'total',       label: 'Custo Total',    type: 'num', calc: true },
   { key: 'precoVenda',  label: 'Preço de Venda', type: 'num' },
-  { key: 'markup',      label: 'Markup',         type: 'num',  calc: true },
+  { key: 'markup',      label: 'Markup',         type: 'num', calc: true },
   { key: 'qtdVendida',  label: 'Qtd. Vendida',   type: 'num' },
-  { key: 'fat',         label: 'Faturamento',    type: 'num',  calc: true },
+  { key: 'fat',         label: 'Faturamento',    type: 'num', calc: true },
 ];
 
 function sortBy(key) {
-  if (S.sortCol === key) {
-    S.sortDir = S.sortDir === 'asc' ? 'desc' : 'asc';
-  } else {
-    S.sortCol = key;
-    S.sortDir = 'asc';
-  }
+  S.sortDir = S.sortCol === key ? (S.sortDir === 'asc' ? 'desc' : 'asc') : 'asc';
+  S.sortCol = key;
   renderProdutos();
 }
 
-function getSortedProdutos() {
+function getSorted() {
   const arr = S.produtos.map(p => ({ p, c: calcProd(p) }));
   if (!S.sortCol) return arr;
   const col = COLS.find(c => c.key === S.sortCol);
   arr.sort((a, b) => {
-    let va = col.calc ? a.c[S.sortCol] : (S.sortCol === 'tipo' ? a.p.tipo : a.p[S.sortCol]);
-    let vb = col.calc ? b.c[S.sortCol] : (S.sortCol === 'tipo' ? b.p.tipo : b.p[S.sortCol]);
-    if (va === null || va === undefined) va = col.type === 'text' ? '' : -Infinity;
-    if (vb === null || vb === undefined) vb = col.type === 'text' ? '' : -Infinity;
-    if (col.type === 'text') return S.sortDir === 'asc' ? va.localeCompare(vb,'pt') : vb.localeCompare(va,'pt');
+    let va = col.calc ? a.c[S.sortCol] : a.p[S.sortCol];
+    let vb = col.calc ? b.c[S.sortCol] : b.p[S.sortCol];
+    if (va == null) va = col.type === 'text' ? '' : -Infinity;
+    if (vb == null) vb = col.type === 'text' ? '' : -Infinity;
+    if (col.type === 'text') return S.sortDir === 'asc' ? String(va).localeCompare(String(vb), 'pt') : String(vb).localeCompare(String(va), 'pt');
     return S.sortDir === 'asc' ? va - vb : vb - va;
   });
   return arr;
 }
 
-// ═══════════════════════════════════════════════
-// RENDER THEAD
-// ═══════════════════════════════════════════════
-function renderThead() {
+// ══════════════════════════════════════════
+// RENDER PRODUTOS (table only)
+// ══════════════════════════════════════════
+function renderProdutos() {
+  // thead
+  const thead = document.getElementById('thead-produtos');
   const tr = document.createElement('tr');
   COLS.forEach(col => {
     const th = document.createElement('th');
     th.className = 'sortable' + (col.type === 'num' ? ' r' : '');
     if (S.sortCol === col.key) th.classList.add('sort-' + S.sortDir);
     const icon = S.sortCol === col.key ? (S.sortDir === 'asc' ? '▲' : '▼') : '⇅';
-    th.innerHTML = col.label + `<i class="sort-icon">${icon}</i>`;
+    th.innerHTML = col.label + `<i class="si">${icon}</i>`;
     th.onclick = () => sortBy(col.key);
     tr.appendChild(th);
   });
-  // Ações (não ordenável)
   const thAct = document.createElement('th');
-  thAct.style.textAlign = 'center';
-  thAct.textContent = 'Ações';
+  thAct.style.textAlign = 'center'; thAct.textContent = 'Ações';
   tr.appendChild(thAct);
-  document.getElementById('thead-produtos').innerHTML = '';
-  document.getElementById('thead-produtos').appendChild(tr);
-}
+  thead.innerHTML = ''; thead.appendChild(tr);
 
-// ═══════════════════════════════════════════════
-// RENDER PRODUTOS
-// ═══════════════════════════════════════════════
-function renderProdutos() {
-  renderThead();
   const tbody = document.getElementById('tbody-produtos');
   const tfoot = document.getElementById('tfoot-total');
 
   if (S.produtos.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="13"><div class="empty"><div class="empty-icon">🏭</div><div class="empty-title">Nenhum produto cadastrado</div><div class="empty-sub">Clique em "Novo Produto" para começar</div></div></td></tr>`;
-    tfoot.innerHTML = '';
-    return;
+    tbody.innerHTML = `<tr><td colspan="12"><div class="empty"><div class="empty-icon">🏭</div><div class="empty-title">Nenhum produto cadastrado</div><div class="empty-sub">Clique em "Novo Produto" para começar</div></div></td></tr>`;
+    tfoot.innerHTML = ''; return;
   }
 
-  const sorted = getSortedProdutos();
+  const sorted = getSorted();
   let totCusto = 0, totFat = 0;
 
   tbody.innerHTML = sorted.map(({ p, c }) => {
@@ -606,19 +585,14 @@ function renderProdutos() {
     totFat   += c.fat;
     const mkLabel = c.markup !== null ? c.markup.toFixed(2).replace('.', ',') + 'x' : '—';
     const mkCls   = c.markup !== null ? (c.markup >= 2 ? 'mk-hi' : c.markup >= 1 ? 'mk-md' : 'mk-lo') : 'mk-na';
-    const tipoCls = p.tipo === 'produzido' ? 'produzido' : 'revendido';
-    const tipoLabel = p.tipo === 'produzido' ? '⚙️ Produzido' : '🛒 Revendido';
-    const tempoCell = p.tipo === 'revendido' ? '—' : fmtN(p.tempo, 0) + ' min';
-    const moCell    = p.tipo === 'revendido' ? '—' : 'R$ ' + fmtBR(c.maoObraTotal);
-    const mpCell    = p.tipo === 'revendido' ? '—' : 'R$ ' + fmtBR(c.matPrima);
-    const caCell    = p.tipo === 'revendido' ? '—' : 'R$ ' + fmtBR(c.custosAdic);
+    const isRev   = p.tipo === 'revendido';
     return `<tr>
-      <td><button class="tipo-btn ${tipoCls}" onclick="toggleTipo(${p.id})" title="Clique para alternar">${tipoLabel}</button></td>
+      <td><button class="tipo-btn ${isRev ? 'revendido' : 'produzido'}" onclick="toggleTipo(${p.id})">${isRev ? '🛒 Revendido' : '⚙️ Produzido'}</button></td>
       <td><strong>${esc(p.nome)}</strong></td>
-      <td class="r">${tempoCell}</td>
-      <td class="r">${moCell}</td>
-      <td class="r">${mpCell}</td>
-      <td class="r">${caCell}</td>
+      <td class="r">${isRev ? '—' : fmtN(p.tempo, 0) + ' min'}</td>
+      <td class="r">${isRev ? '—' : 'R$ ' + fmtBR(c.maoObraTotal)}</td>
+      <td class="r">${isRev ? '—' : 'R$ ' + fmtBR(c.matPrima)}</td>
+      <td class="r">${isRev ? '—' : 'R$ ' + fmtBR(c.custosAdic)}</td>
       <td class="r"><strong>R$ ${fmtBR(c.total)}</strong></td>
       <td class="r bl">R$ ${fmtBR(p.precoVenda)}</td>
       <td class="r"><span class="mk-badge ${mkCls}">${mkLabel}</span></td>
@@ -626,10 +600,10 @@ function renderProdutos() {
       <td class="r"><strong>R$ ${fmtBR(c.fat)}</strong></td>
       <td>
         <div class="action-cell">
-          <button class="act-btn edit" onclick="openModalProduto(${p.id})" title="Editar produto">
+          <button class="act-btn edit" onclick="openModalProduto(${p.id})" title="Editar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
           </button>
-          <button class="act-btn del" onclick="deleteProduto(${p.id})" title="Excluir produto">
+          <button class="act-btn del" onclick="deleteProduto(${p.id})" title="Excluir">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
           </button>
         </div>
@@ -638,21 +612,37 @@ function renderProdutos() {
   }).join('');
 
   const totMk = totCusto > 0 ? totFat / totCusto : null;
-  const totMkLabel = totMk !== null ? totMk.toFixed(2).replace('.', ',') + 'x' : '—';
   tfoot.innerHTML = `
-    <td><strong>TOTAL</strong></td>
-    <td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td>
+    <td><strong>TOTAL</strong></td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td>
     <td class="r"><strong>R$ ${fmtBR(totCusto)}</strong></td>
     <td class="r bl"><strong>R$ ${fmtBR(totFat)}</strong></td>
-    <td class="r"><strong>${totMkLabel}</strong></td>
-    <td class="r">—</td>
-    <td class="r"><strong>R$ ${fmtBR(totFat)}</strong></td>
-    <td></td>`;
+    <td class="r"><strong>${totMk !== null ? totMk.toFixed(2).replace('.', ',') + 'x' : '—'}</strong></td>
+    <td class="r">—</td><td class="r"><strong>R$ ${fmtBR(totFat)}</strong></td><td></td>`;
 }
 
-// ═══════════════════════════════════════════════
-// DYNAMIC ROWS HELPERS
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
+// MODAL TIPO
+// ══════════════════════════════════════════
+function setModalTipo(tipo) {
+  const isProd = tipo === 'produzido';
+  document.getElementById('painel-produzido').style.display = isProd ? 'block' : 'none';
+  document.getElementById('painel-revendido').style.display = isProd ? 'none'  : 'block';
+  document.getElementById('resumo-mo-row').style.display    = isProd ? 'grid'  : 'none';
+  document.getElementById('opt-produzido').className = 'tipo-opt' + (isProd ? ' active-prod' : '');
+  document.getElementById('opt-revendido').className = 'tipo-opt' + (!isProd ? ' active-rev' : '');
+  calcProdModal();
+}
+
+function onMoTipoChange() {
+  const v = document.getElementById('inp-mo-tipo').value;
+  document.getElementById('sec-mo-interna').style.display = (v === 'interna' || v === 'ambas') ? 'block' : 'none';
+  document.getElementById('sec-mo-externa').style.display = (v === 'externa' || v === 'ambas') ? 'block' : 'none';
+  calcProdModal();
+}
+
+// ══════════════════════════════════════════
+// DYNAMIC ROWS
+// ══════════════════════════════════════════
 function updateEmpty(listId, emptyId) {
   document.getElementById(emptyId).style.display =
     document.getElementById(listId).children.length === 0 ? 'block' : 'none';
@@ -661,8 +651,7 @@ function updateEmpty(listId, emptyId) {
 function addMaoObraRow(desc='', valor='') {
   const list = document.getElementById('lista-mao-obra');
   const d = document.createElement('div');
-  d.className = 'insumo-item';
-  d.style.gridTemplateColumns = '1.8fr 1fr auto';
+  d.className = 'insumo-item'; d.style.gridTemplateColumns = '1.8fr 1fr auto';
   d.innerHTML = `
     <div class="fg"><label>Descrição</label><input type="text" class="mo-desc" placeholder="Ex: Costureira terceirizada" value="${esc(desc)}" oninput="calcProdModal()"></div>
     <div class="fg"><label>Valor (R$)</label><input type="number" class="mo-val" min="0" step="0.01" value="${valor}" oninput="calcProdModal()"></div>
@@ -675,8 +664,7 @@ function addMaoObraRow(desc='', valor='') {
 function addMatPrimaRow(desc='', valor='', qtd=1) {
   const list = document.getElementById('lista-mat-prima');
   const d = document.createElement('div');
-  d.className = 'insumo-item';
-  d.style.gridTemplateColumns = '1.6fr 1fr 0.8fr auto';
+  d.className = 'insumo-item'; d.style.gridTemplateColumns = '1.6fr 1fr 0.8fr auto';
   d.innerHTML = `
     <div class="fg"><label>Nome</label><input type="text" class="mp-desc" placeholder="Ex: Tecido algodão" value="${esc(desc)}" oninput="calcProdModal()"></div>
     <div class="fg"><label>Valor Unitário (R$)</label><input type="number" class="mp-val" min="0" step="0.01" value="${valor}" oninput="calcProdModal()"></div>
@@ -690,8 +678,7 @@ function addMatPrimaRow(desc='', valor='', qtd=1) {
 function addCustoAdicRow(desc='', valor='') {
   const list = document.getElementById('lista-custos-adic');
   const d = document.createElement('div');
-  d.className = 'insumo-item';
-  d.style.gridTemplateColumns = '1.8fr 1fr auto';
+  d.className = 'insumo-item'; d.style.gridTemplateColumns = '1.8fr 1fr auto';
   d.innerHTML = `
     <div class="fg"><label>Descrição</label><input type="text" class="ca-desc" placeholder="Ex: Embalagem, frete..." value="${esc(desc)}" oninput="calcProdModal()"></div>
     <div class="fg"><label>Valor (R$)</label><input type="number" class="ca-val" min="0" step="0.01" value="${valor}" oninput="calcProdModal()"></div>
@@ -701,27 +688,36 @@ function addCustoAdicRow(desc='', valor='') {
   calcProdModal();
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CALC MODAL
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 function calcProdModal() {
-  const tipo   = document.getElementById('painel-revendido').style.display === 'none' ? 'produzido' : 'revendido';
+  const isProd = document.getElementById('painel-produzido').style.display !== 'none';
   const preco  = parseFloat(document.getElementById('inp-prod-preco').value) || 0;
   const qtd    = parseFloat(document.getElementById('inp-prod-qtd').value)   || 0;
   let total = 0, moTotal = 0, mp = 0, ca = 0;
 
-  if (tipo === 'produzido') {
-    const tempo = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
-    const cm    = getCustoMin();
-    const moInt = tempo * S.config.numFunc * cm;
+  if (isProd) {
+    const tempo    = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
+    const comissao = parseFloat(document.getElementById('inp-comissao-interna').value) || 0;
+    const cm       = getCustoMin();
+    const moInt    = tempo * cm + comissao;
+    const moTipo   = document.getElementById('inp-mo-tipo').value;
     let moExt = 0;
     document.querySelectorAll('#lista-mao-obra .mo-val').forEach(el => { moExt += parseFloat(el.value) || 0; });
     document.querySelectorAll('#lista-mat-prima .insumo-item').forEach(row => {
       mp += (parseFloat(row.querySelector('.mp-val')?.value) || 0) * (parseFloat(row.querySelector('.mp-qtd')?.value) || 1);
     });
     document.querySelectorAll('#lista-custos-adic .ca-val').forEach(el => { ca += parseFloat(el.value) || 0; });
-    moTotal = moInt + moExt;
-    total   = moTotal + mp + ca;
+    if (moTipo === 'interna')   moTotal = moInt;
+    else if (moTipo === 'externa') moTotal = moExt;
+    else moTotal = moInt + moExt;
+    total = moTotal + mp + ca;
+    // Preview interna
+    document.getElementById('pm-mo-interna-preview').value = 'R$ ' + fmtBR(moInt);
+    // Sub label
+    const subMap = { interna: 'Apenas interna', externa: 'Apenas externa', ambas: 'Interna + Externa' };
+    document.getElementById('pm-mo-sub').textContent = subMap[moTipo] || '';
   } else {
     total = parseFloat(document.getElementById('inp-prod-compra').value) || 0;
   }
@@ -729,45 +725,38 @@ function calcProdModal() {
   const markup = total > 0 && preco > 0 ? preco / total : null;
   const fat    = preco * qtd;
 
-  const rp = document.getElementById('resumo-produzido');
-  if (tipo === 'produzido') {
-    rp.style.display = 'grid';
-    document.getElementById('pm-mao-obra').textContent    = 'R$ ' + fmtBR(moTotal);
-    document.getElementById('pm-mat-prima').textContent   = 'R$ ' + fmtBR(mp);
-    document.getElementById('pm-custos-adic').textContent = 'R$ ' + fmtBR(ca);
-  } else {
-    rp.style.display = 'none';
-  }
+  document.getElementById('pm-mao-obra').textContent    = 'R$ ' + fmtBR(moTotal);
+  document.getElementById('pm-mat-prima').textContent   = 'R$ ' + fmtBR(mp);
+  document.getElementById('pm-custos-adic').textContent = 'R$ ' + fmtBR(ca);
   document.getElementById('pm-custo-total').textContent = 'R$ ' + fmtBR(total);
   document.getElementById('pm-fat').textContent         = 'R$ ' + fmtBR(fat);
   const mkEl = document.getElementById('pm-markup');
-  if (markup !== null) {
-    mkEl.textContent = markup.toFixed(2).replace('.', ',') + 'x';
-    mkEl.className = 'kpi-value ' + (markup >= 2 ? 'gn' : markup >= 1 ? 'gd' : 'rd');
-  } else {
-    mkEl.textContent = '—'; mkEl.className = 'kpi-value';
-  }
+  mkEl.textContent = markup !== null ? markup.toFixed(2).replace('.', ',') + 'x' : '—';
+  mkEl.className   = 'kpi-value ' + (markup !== null ? (markup >= 2 ? 'gn' : markup >= 1 ? 'gd' : 'rd') : '');
 }
 
-// ═══════════════════════════════════════════════
-// MODAL PRODUTO
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
+// OPEN MODAL PRODUTO
+// ══════════════════════════════════════════
 function openModalProduto(id = null) {
   S.editProdId = id;
-  document.getElementById('hint-nfunc').textContent = S.config.numFunc;
+  // reset
   ['lista-mao-obra','lista-mat-prima','lista-custos-adic'].forEach(lid => document.getElementById(lid).innerHTML = '');
   ['lista-mao-obra-empty','lista-mat-prima-empty','lista-custos-adic-empty'].forEach(eid => document.getElementById(eid).style.display = 'block');
 
-  let tipo = 'produzido';
+  let tipo = 'produzido', moTipo = 'interna';
   if (id) {
     const p = S.produtos.find(x => x.id === id);
-    tipo = p.tipo || 'produzido';
+    tipo   = p.tipo || 'produzido';
+    moTipo = p.moTipo || 'interna';
     document.getElementById('modal-prod-title').textContent = 'Editar: ' + p.nome;
     document.getElementById('inp-prod-nome').value   = p.nome;
     document.getElementById('inp-prod-preco').value  = p.precoVenda;
     document.getElementById('inp-prod-qtd').value    = p.qtdVendida;
     if (tipo === 'produzido') {
-      document.getElementById('inp-prod-tempo').value = p.tempo;
+      document.getElementById('inp-prod-tempo').value       = p.tempo;
+      document.getElementById('inp-comissao-interna').value = p.comissaoInterna || 0;
+      document.getElementById('inp-mo-tipo').value          = moTipo;
       (p.maoObraExterna || []).forEach(i => addMaoObraRow(i.desc, i.valor));
       (p.matPrima       || []).forEach(i => addMatPrimaRow(i.desc, i.valor, i.qtd));
       (p.custosAdic     || []).forEach(i => addCustoAdicRow(i.desc, i.valor));
@@ -776,38 +765,39 @@ function openModalProduto(id = null) {
     }
   } else {
     document.getElementById('modal-prod-title').textContent = 'Novo Produto';
-    document.getElementById('inp-prod-nome').value  = '';
-    document.getElementById('inp-prod-preco').value = '0';
-    document.getElementById('inp-prod-qtd').value   = '0';
-    document.getElementById('inp-prod-tempo').value = '0';
-    document.getElementById('inp-prod-compra').value = '0';
+    document.getElementById('inp-prod-nome').value          = '';
+    document.getElementById('inp-prod-preco').value         = '0';
+    document.getElementById('inp-prod-qtd').value           = '0';
+    document.getElementById('inp-prod-tempo').value         = '0';
+    document.getElementById('inp-comissao-interna').value   = '0';
+    document.getElementById('inp-prod-compra').value        = '0';
+    document.getElementById('inp-mo-tipo').value            = 'interna';
   }
 
+  // Apply MO panels before setModalTipo (which calls calcProdModal)
+  onMoTipoChange();
   setModalTipo(tipo);
-  calcProdModal();
   openModal('modal-produto');
 }
 
-function setModalTipo(tipo) {
-  const isProd = tipo === 'produzido';
-  document.getElementById('painel-produzido').style.display = isProd ? 'block' : 'none';
-  document.getElementById('painel-revendido').style.display = isProd ? 'none'  : 'block';
-  document.getElementById('modal-prod-tipo-label').textContent = isProd ? '⚙️ Produto Produzido internamente' : '🛒 Produto para Revenda';
-  calcProdModal();
-}
-
+// ══════════════════════════════════════════
+// SALVAR PRODUTO
+// ══════════════════════════════════════════
 function salvarProduto() {
   const nome  = document.getElementById('inp-prod-nome').value.trim();
   const preco = parseFloat(document.getElementById('inp-prod-preco').value) || 0;
   const qtd   = parseFloat(document.getElementById('inp-prod-qtd').value)   || 0;
   if (!nome) { toast('Informe o nome do produto', 'error'); return; }
 
-  const tipo = document.getElementById('painel-revendido').style.display === 'none' ? 'produzido' : 'revendido';
+  const isProd = document.getElementById('painel-produzido').style.display !== 'none';
+  const tipo   = isProd ? 'produzido' : 'revendido';
 
-  let obj = { nome, tipo, precoVenda: preco, qtdVendida: qtd, precoCompra: 0, tempo: 0, maoObraExterna: [], matPrima: [], custosAdic: [] };
+  let obj = { nome, tipo, precoVenda: preco, qtdVendida: qtd, precoCompra: 0, tempo: 0, moTipo: 'interna', comissaoInterna: 0, maoObraExterna: [], matPrima: [], custosAdic: [] };
 
-  if (tipo === 'produzido') {
-    obj.tempo = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
+  if (isProd) {
+    obj.tempo           = parseFloat(document.getElementById('inp-prod-tempo').value) || 0;
+    obj.comissaoInterna = parseFloat(document.getElementById('inp-comissao-interna').value) || 0;
+    obj.moTipo          = document.getElementById('inp-mo-tipo').value;
     document.querySelectorAll('#lista-mao-obra .insumo-item').forEach(row => {
       const desc = row.querySelector('.mo-desc')?.value.trim() || '';
       const valor = parseFloat(row.querySelector('.mo-val')?.value) || 0;
@@ -830,7 +820,7 @@ function salvarProduto() {
 
   if (S.editProdId) {
     const idx = S.produtos.findIndex(x => x.id === S.editProdId);
-    S.produtos[idx] = { ...S.produtos[idx], ...obj };
+    S.produtos[idx] = { id: S.editProdId, ...obj };
   } else {
     S.produtos.push({ id: S.nextId++, ...obj });
   }
@@ -847,9 +837,9 @@ function deleteProduto(id) {
   toast('Produto removido', '');
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // EXPORTAR EXCEL
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 function exportarExcel() {
   if (S.produtos.length === 0) { toast('Nenhum produto para exportar', 'error'); return; }
   const rows = [['Produto', 'Custo Total (R$)', 'Preço de Venda (R$)', 'Quantidade Vendida']];
@@ -865,15 +855,15 @@ function exportarExcel() {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Precificação');
   XLSX.writeFile(wb, 'precificacao_produtos.xlsx');
-  toast('Excel exportado com sucesso!', 'success');
+  toast('Excel exportado!', 'success');
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // DASHBOARD
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 let chartInstances = [];
 function renderDashboard() {
-  chartInstances.forEach(c => { try { c.destroy(); } catch(e) {} });
+  chartInstances.forEach(c => { try { c.destroy(); } catch(e){} });
   chartInstances = [];
   if (S.produtos.length === 0) {
     document.getElementById('dashboard-empty').style.display='block';
@@ -881,28 +871,27 @@ function renderDashboard() {
   }
   document.getElementById('dashboard-empty').style.display='none';
   document.getElementById('dashboard-content').style.display='block';
-
   const computed = S.produtos.map(p => ({ ...p, ...calcProd(p) }));
-  const totFat   = computed.reduce((a, p) => a + p.fat, 0);
-  const totCusto = computed.reduce((a, p) => a + p.total * p.qtdVendida, 0);
+  const totFat   = computed.reduce((a,p) => a+p.fat, 0);
+  const totCusto = computed.reduce((a,p) => a+p.total*p.qtdVendida, 0);
   const totMargem= totFat - totCusto;
-  const totMk    = totCusto > 0 ? totFat / totCusto : null;
-  const avgMk    = computed.reduce((a, p) => a + (p.markup || 0), 0) / computed.length;
+  const totMk    = totCusto > 0 ? totFat/totCusto : null;
+  const avgMk    = computed.reduce((a,p) => a+(p.markup||0),0)/computed.length;
 
   document.getElementById('dash-kpis').innerHTML = `
     <div class="kpi kpi-bl"><div class="kpi-label">Faturamento Total</div><div class="kpi-value bl">R$ ${fmtBR(totFat)}</div><div class="kpi-sub">${computed.length} produto(s)</div></div>
     <div class="kpi kpi-rd"><div class="kpi-label">Custo Total</div><div class="kpi-value rd">R$ ${fmtBR(totCusto)}</div></div>
     <div class="kpi ${totMargem>=0?'kpi-gn':'kpi-rd'}"><div class="kpi-label">Margem Total</div><div class="kpi-value ${totMargem>=0?'gn':'rd'}">R$ ${fmtBR(Math.abs(totMargem))}</div><div class="kpi-sub">${totMargem>=0?'Lucro':'Prejuízo'}</div></div>
-    <div class="kpi"><div class="kpi-label">Markup Total</div><div class="kpi-value ${totMk!==null?(totMk>=2?'gn':totMk>=1?'gd':'rd'):''}">${totMk!==null?totMk.toFixed(2).replace('.',',')+'x':'—'}</div><div class="kpi-sub">Fat. ÷ Custo</div></div>
-    <div class="kpi"><div class="kpi-label">Markup Médio</div><div class="kpi-value ${avgMk>=2?'gn':avgMk>=1?'gd':'rd'}">${avgMk.toFixed(2).replace('.',',')+'x'}</div><div class="kpi-sub">Média dos produtos</div></div>
+    <div class="kpi"><div class="kpi-label">Markup Total</div><div class="kpi-value ${totMk!==null?(totMk>=2?'gn':totMk>=1?'gd':'rd'):''}">${totMk!==null?totMk.toFixed(2).replace('.',',')+'x':'—'}</div></div>
+    <div class="kpi"><div class="kpi-label">Markup Médio</div><div class="kpi-value ${avgMk>=2?'gn':avgMk>=1?'gd':'rd'}">${avgMk.toFixed(2).replace('.',',')+'x'}</div></div>
     <div class="kpi kpi-am"><div class="kpi-label">Custo/Minuto</div><div class="kpi-value gd">R$ ${getCustoMin().toFixed(4).replace('.',',')}</div></div>`;
 
-  const COLORS = ['#0d2a5e','#b8922a','#15803d','#b91c1c','#6d28d9','#0891b2','#d97706'];
-  const totMO = computed.reduce((a,p) => a + p.maoObraTotal*p.qtdVendida, 0);
-  const totMP = computed.reduce((a,p) => a + p.matPrima*p.qtdVendida, 0);
-  const totCA = computed.reduce((a,p) => a + p.custosAdic*p.qtdVendida, 0);
+  const COLORS=['#0d2a5e','#b8922a','#15803d','#b91c1c','#6d28d9','#0891b2','#d97706'];
+  const totMO=computed.reduce((a,p)=>a+p.maoObraTotal*p.qtdVendida,0);
+  const totMP=computed.reduce((a,p)=>a+p.matPrima*p.qtdVendida,0);
+  const totCA=computed.reduce((a,p)=>a+p.custosAdic*p.qtdVendida,0);
 
-  chartInstances.push(new Chart(document.getElementById('chart-composicao').getContext('2d'), {
+  chartInstances.push(new Chart(document.getElementById('chart-composicao').getContext('2d'),{
     type:'doughnut',
     data:{labels:['Mão de Obra','Matéria Prima','Custos Adicionais'],datasets:[{data:[totMO,totMP,totCA],backgroundColor:['#0d2a5e','#b8922a','#15803d'],borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:11,family:'Inter'},padding:12}}}}
@@ -916,47 +905,47 @@ function renderDashboard() {
     type:'bar',
     data:{labels:computed.map(p=>p.nome),datasets:[
       {label:'Faturamento',data:computed.map(p=>+p.fat.toFixed(2)),backgroundColor:'#0d2a5e',borderRadius:4},
-      {label:'Custo Total',data:computed.map(p=>+(p.total*p.qtdVendida).toFixed(2)),backgroundColor:'#b91c1c',borderRadius:4}
+      {label:'Custo',data:computed.map(p=>+(p.total*p.qtdVendida).toFixed(2)),backgroundColor:'#b91c1c',borderRadius:4}
     ]},
     options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:11,family:'Inter'},padding:10}}},scales:{y:{ticks:{callback:v=>'R$'+fmtBR(v)},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}
   }));
 
-  document.getElementById('dash-breakdown').innerHTML = computed.map((p,i) => {
-    const dot = COLORS[i%COLORS.length];
-    const mkLabel = p.markup!==null?p.markup.toFixed(2).replace('.',',')+'x':'—';
-    const mkCls   = p.markup!==null?(p.markup>=2?'bg-gn':p.markup>=1?'bg-am':'bg-rd'):'bg-bl';
-    return `
-    <div style="margin-bottom:12px">
+  document.getElementById('dash-breakdown').innerHTML = computed.map((p,i)=>{
+    const dot=COLORS[i%COLORS.length];
+    const mkLabel=p.markup!==null?p.markup.toFixed(2).replace('.',',')+'x':'—';
+    const mkCls=p.markup!==null?(p.markup>=2?'bg-gn':p.markup>=1?'bg-am':'bg-rd'):'bg-bl';
+    return `<div style="margin-bottom:12px">
       <div style="font-size:12px;font-weight:700;color:var(--tx2);margin-bottom:6px;display:flex;align-items:center;gap:7px">
         <span style="width:9px;height:9px;border-radius:50%;background:${dot};flex-shrink:0;display:inline-block"></span>
-        ${esc(p.nome)}<span class="badge ${mkCls}" style="margin-left:auto">${mkLabel}</span>
+        ${esc(p.nome)}<span style="font-size:10px;font-weight:500;color:var(--tx3);margin-left:2px">${p.tipo==='revendido'?'(Revenda)':'(Produzido)'}</span>
+        <span class="mk-badge ${mkCls}" style="margin-left:auto">${mkLabel}</span>
       </div>
       ${p.tipo==='revendido'
-        ? `<div class="breakdown-row"><span class="breakdown-label">🛒 Preço de Compra</span><span class="breakdown-val">R$ ${fmtBR(p.total)}</span></div>`
-        : `<div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#0d2a5e"></span>Mão de Obra</span><span class="breakdown-val">R$ ${fmtBR(p.maoObraTotal)}<span class="breakdown-pct">${p.total>0?((p.maoObraTotal/p.total)*100).toFixed(1)+'%':''}</span></span></div>
-           <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#b8922a"></span>Matéria Prima</span><span class="breakdown-val">R$ ${fmtBR(p.matPrima)}<span class="breakdown-pct">${p.total>0?((p.matPrima/p.total)*100).toFixed(1)+'%':''}</span></span></div>
-           <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#15803d"></span>Custos Adicionais</span><span class="breakdown-val">R$ ${fmtBR(p.custosAdic)}<span class="breakdown-pct">${p.total>0?((p.custosAdic/p.total)*100).toFixed(1)+'%':''}</span></span></div>`
+        ?`<div class="breakdown-row"><span class="breakdown-label">🛒 Preço de Compra</span><span class="breakdown-val">R$ ${fmtBR(p.total)}</span></div>`
+        :`<div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#0d2a5e"></span>Mão de Obra</span><span class="breakdown-val">R$ ${fmtBR(p.maoObraTotal)}<span class="breakdown-pct">${p.total>0?((p.maoObraTotal/p.total)*100).toFixed(1)+'%':''}</span></span></div>
+          <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#b8922a"></span>Matéria Prima</span><span class="breakdown-val">R$ ${fmtBR(p.matPrima)}<span class="breakdown-pct">${p.total>0?((p.matPrima/p.total)*100).toFixed(1)+'%':''}</span></span></div>
+          <div class="breakdown-row"><span class="breakdown-label"><span class="breakdown-dot" style="background:#15803d"></span>Custos Adicionais</span><span class="breakdown-val">R$ ${fmtBR(p.custosAdic)}<span class="breakdown-pct">${p.total>0?((p.custosAdic/p.total)*100).toFixed(1)+'%':''}</span></span></div>`
       }
       <div class="breakdown-row" style="background:var(--sf2);border-radius:6px;padding:4px 8px"><span class="breakdown-label" style="font-weight:700;color:var(--tx)">Custo Total</span><span class="breakdown-val"><strong>R$ ${fmtBR(p.total)}</strong></span></div>
-    </div>${i<computed.length-1?'<div style="height:1px;background:var(--bd2);margin:8px 0"></div>':''}`;
+    </div>${i<computed.length-1?'<div class="sep" style="margin:8px 0"></div>':''}`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════════
 // UTILS
-// ═══════════════════════════════════════════════
-function fmtN(v, dec=2) { return new Intl.NumberFormat('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(v); }
-function fmtBR(v, dec=2) { return fmtN(v, dec); }
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function openModal(id)  { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function toast(msg, type='') {
-  const t = document.getElementById('tst');
-  t.textContent = msg; t.className='toast'+(type?' '+type:'');
-  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3200);
+// ══════════════════════════════════════════
+function fmtN(v,dec=2){return new Intl.NumberFormat('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(v);}
+function fmtBR(v,dec=2){return fmtN(v,dec);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function toast(msg,type=''){
+  const t=document.getElementById('tst');
+  t.textContent=msg;t.className='toast'+(type?' '+type:'');
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);
 }
-document.querySelectorAll('.mov').forEach(el => {
-  el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); });
+document.querySelectorAll('.mov').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
 });
 
 // INIT
